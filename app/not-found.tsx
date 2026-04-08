@@ -25,7 +25,7 @@ export default function NotFound() {
         />
 
         <p className="text-[11px] font-mono uppercase tracking-[0.3em] text-net-green mb-6">
-          Airball
+          Airball 
         </p>
 
         <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-net-cream mb-4">
