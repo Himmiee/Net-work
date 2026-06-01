@@ -5,15 +5,16 @@ import { ArrowRight } from "lucide-react";
 export default function BottomCTA() {
   return (
     <section className="px-8 md:px-16 py-24 md:py-40">
-      <div className="max-w-7xl mx-auto text-center">
+      <div className="max-w-7xl mx-auto text-center scroll-reveal">
         <p className="text-[11px] font-mono uppercase tracking-[0.3em] text-net-green mb-6">
-          Built With
+          Waitlist Open
         </p>
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-net-cream mb-6">
-          Real tools. Real data.
+          Be the smartest in your group chat.
         </h2>
-        <p className="text-sm text-net-cream-dim/40 mb-12 max-w-md mx-auto">
-          Next.js · Three.js · Grok API · Vector DB · Supabase
+        <p className="text-sm text-net-cream-dim/60 mb-12 max-w-md mx-auto leading-relaxed">
+          Join the private beta. Get early access to the 3D court engine,
+          the AI Hot Take Scorer, and advanced player evaluation intelligence.
         </p>
         <a
           href="#"

@@ -19,7 +19,7 @@ export default function FeaturesSection() {
         <p className="text-[11px] font-mono uppercase tracking-[0.3em] text-net-green mb-4">
           Six Tools
         </p>
-        <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-net-cream mb-20 max-w-xl">
+        <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-net-cream mb-20 max-w-xl scroll-reveal">
           Everything your group chat doesn&apos;t know they need.
         </h2>
 
@@ -27,7 +27,7 @@ export default function FeaturesSection() {
           {features.map((f, i) => (
             <div
               key={f.title}
-              className="group flex items-start gap-6 md:gap-12 py-8 border-t border-net-border/30 hover:bg-net-surface/30 transition-colors px-4 -mx-4 rounded-lg cursor-default"
+              className="group flex items-start gap-6 md:gap-12 py-8 border-t border-net-border/30 hover:bg-net-surface/30 transition-colors px-4 -mx-4 rounded-lg cursor-default scroll-reveal"
             >
               <span className="text-[11px] font-mono text-net-cream-dim/20 pt-1 w-6 shrink-0">
                 {String(i + 1).padStart(2, "0")}
