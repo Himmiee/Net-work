@@ -1,15 +1,15 @@
 "use client";
 
-import { Flame, Box, BarChart3, MessageCircle, Gamepad2, Share2 } from "lucide-react";
+import { Flame, Box, BarChart3, MessageCircle, Target, Share2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 const features: { Icon: LucideIcon; title: string; desc: string; tag: string }[] = [
-  { Icon: Flame, title: "Bullshit Meter", desc: "Paste any hoops claim. Get a 0–100% Ball Knowledge Rating with receipts.", tag: "AI" },
-  { Icon: Box, title: "3D Court", desc: "See spacing, screening, and plays on an interactive Three.js court.", tag: "3D" },
-  { Icon: BarChart3, title: "Player Eval", desc: "Advanced stats explained simply. Radar charts. AI scouting reports.", tag: "Data" },
-  { Icon: MessageCircle, title: "AI Mentor", desc: "Ask anything about basketball. Instant, verified data-driven insights.", tag: "Chat" },
-  { Icon: Gamepad2, title: "GM Mode", desc: "Cap space sim. Make roster moves. AI projects team performance.", tag: "Game" },
-  { Icon: Share2, title: "Receipts", desc: "Shareable stat cards and scouting reports for your group chat.", tag: "Share" },
+  { Icon: Flame, title: "Truth Meter", desc: "Paste any hoops claim. Get a 0–100% Ball Knowledge Rating with receipts.", tag: "AI" },
+  { Icon: Box, title: "3D Court", desc: "See spacing, screening, and player movement on an interactive court.", tag: "3D" },
+  { Icon: BarChart3, title: "Player Eval", desc: "Advanced statistics made simple. Clean spacing metrics and exportable scouting cards.", tag: "Data" },
+  { Icon: MessageCircle, title: "AI Mentor", desc: "Get tactical feedback from an AI coach trained on spacing principles.", tag: "Chat" },
+  { Icon: Target, title: "Playbook Simulation", desc: "Run classic plays (Pick & Roll, Pin Down, Isolation) to analyze floor geometry.", tag: "Tactics" },
+  { Icon: Share2, title: "Receipts", desc: "Shareable tactical tickets and stats cards directly to your group chats.", tag: "Share" },
 ];
 
 export default function FeaturesSection() {

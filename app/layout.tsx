@@ -5,7 +5,7 @@ import Providers from "./providers";
 export const metadata: Metadata = {
   title: "Net-Work | WNBA & Women's Hoops Intelligence Platform",
   description:
-    "AI-powered women's basketball education platform. WNBA & NCAAW player evaluation, 3D court visualizations, and the Bullshit Meter — because your group chat needs real ball knowledge.",
+    "AI-powered women's basketball education platform. WNBA & NCAAW player evaluation, 3D court visualizations, and the Truth Meter — because your group chat needs real ball knowledge.",
   keywords: [
     "WNBA",
     "NCAAW",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Net-Work | WNBA & Women's Hoops Intelligence Platform",
     description:
-      "AI-powered women's basketball education. 3D court visualizations, advanced stats, and the Bullshit Meter.",
+      "AI-powered women's basketball education. 3D court visualizations, advanced stats, and the Truth Meter.",
     type: "website",
   },
 };
