@@ -33,7 +33,7 @@ export default function CourtWorkspace({
 
       {/* 3D Render Area */}
       <div className="flex-1 w-full relative p-4">
-        <BasketballCourt3D activePlayer={activePlayer} />
+        <BasketballCourt3D activePlayer={activePlayer} selectedPlay={selectedPlay} />
       </div>
 
       {/* Player Spacing Detail Drawer */}
