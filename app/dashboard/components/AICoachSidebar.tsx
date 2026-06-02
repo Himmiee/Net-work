@@ -64,7 +64,7 @@ export default function AICoachSidebar({
 
         <div>
           <h2 className="text-[11px] font-mono uppercase tracking-[0.2em] text-net-green mb-3">
-            Bullshit Meter
+            Truth Meter
           </h2>
           <textarea
             value={claimText}
