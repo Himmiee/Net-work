@@ -23,6 +23,7 @@ export interface Player {
   stats: PlayerStats;
   attributes: PlayerAttributes;
   bio: string;
+  position3D: [number, number, number];
 }
 
 export const players: Player[] = [
@@ -42,6 +43,7 @@ export const players: Player[] = [
       "Paint Threat": 72,
     },
     bio: "Unprecedented shooting range that pulls defensive lines out past 30 feet, opening massive rolling lanes inside.",
+    position3D: [0, 0.5, 3.5],
   },
   {
     id: "wilson",
@@ -59,6 +61,7 @@ export const players: Player[] = [
       "Paint Threat": 99,
     },
     bio: "Dominant interior scorer and rim protector. Draws doubles in the low post, creating wide-open kickout spots.",
+    position3D: [-1.2, 0.5, -1.8],
   },
   {
     id: "ionescu",
@@ -76,6 +79,7 @@ export const players: Player[] = [
       "Paint Threat": 74,
     },
     bio: "Elite shooter off the screen and pick-and-roll general. Excellent spacing gravity on the weak side.",
+    position3D: [-3.2, 0.5, 3.0],
   },
   {
     id: "boston",
@@ -93,6 +97,7 @@ export const players: Player[] = [
       "Paint Threat": 94,
     },
     bio: "High IQ rolling center. Seals defenders efficiently and acts as a secondary hub for high-low passing.",
+    position3D: [1.8, 0.5, -1.2],
   },
   {
     id: "bueckers",
@@ -110,5 +115,6 @@ export const players: Player[] = [
       "Paint Threat": 82,
     },
     bio: "Calculated mid-range assassin and fluid pick-and-roll ball handler. Reads defensive collapses instantly.",
+    position3D: [2.5, 0.5, 2.5],
   },
 ];

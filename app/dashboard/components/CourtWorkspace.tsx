@@ -1,5 +1,6 @@
 import React from "react";
 import { Player } from "../data/players";
+import BasketballCourt3D from "./BasketballCourt3D";
 
 interface CourtWorkspaceProps {
   selectedPlay: string;
@@ -30,19 +31,9 @@ export default function CourtWorkspace({
         </div>
       </div>
 
-      {/* 3D Render Area Placeholder */}
-      <div className="flex-1 w-full relative flex items-center justify-center">
-        <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center select-none pointer-events-none">
-          <p className="text-xs font-mono text-net-green animate-pulse mb-2">
-            Ready for 3D Engine
-          </p>
-          <h3 className="text-lg font-bold text-net-cream mb-1">
-            Interactive 3D Arena
-          </h3>
-          <p className="text-xs text-net-cream-dim/40 max-w-xs leading-normal">
-            This space will host the R3F Canvas showing the court floor, player meshes, and spacing heatmaps.
-          </p>
-        </div>
+      {/* 3D Render Area */}
+      <div className="flex-1 w-full relative p-4">
+        <BasketballCourt3D activePlayer={activePlayer} />
       </div>
 
       {/* Player Spacing Detail Drawer */}
