@@ -7,6 +7,7 @@ interface RosterSidebarProps {
   selectedPlayerId: string;
   onSelectPlayerId: (id: string) => void;
   isVisible: boolean;
+  isCollapsed?: boolean;
 }
 
 export default function RosterSidebar({
@@ -15,12 +16,15 @@ export default function RosterSidebar({
   selectedPlayerId,
   onSelectPlayerId,
   isVisible,
+  isCollapsed = false,
 }: RosterSidebarProps) {
   return (
     <aside
-      className={`w-full lg:w-80 border-r border-net-border bg-net-surface/30 p-6 flex flex-col justify-between overflow-y-auto shrink-0 ${
-        isVisible ? "flex" : "hidden lg:flex"
-      }`}
+      className={`transition-all duration-300 ease-in-out shrink-0 bg-net-surface/30 flex flex-col justify-between overflow-y-auto ${
+        isCollapsed
+          ? "w-0 opacity-0 overflow-hidden border-r-0 p-0"
+          : "w-full lg:w-80 border-r border-net-border p-6"
+      } ${isVisible ? "flex" : "hidden lg:flex"}`}
     >
       <div className="space-y-6">
         <div>

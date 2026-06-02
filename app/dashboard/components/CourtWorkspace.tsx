@@ -1,21 +1,31 @@
 import React from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Player } from "../data/players";
 import BasketballCourt3D from "./BasketballCourt3D";
+import PlayerCard from "./PlayerCard";
 
 interface CourtWorkspaceProps {
   selectedPlay: string;
   activePlayer: Player;
   isVisible: boolean;
+  isRosterCollapsed: boolean;
+  isCoachCollapsed: boolean;
+  onToggleRoster: () => void;
+  onToggleCoach: () => void;
 }
 
 export default function CourtWorkspace({
   selectedPlay,
   activePlayer,
   isVisible,
+  isRosterCollapsed,
+  isCoachCollapsed,
+  onToggleRoster,
+  onToggleCoach,
 }: CourtWorkspaceProps) {
   return (
     <main
-      className={`flex-1 h-full relative bg-net-dark/20 flex flex-col justify-between ${
+      className={`flex-1 h-full relative bg-net-dark/20 flex flex-col justify-between overflow-hidden ${
         isVisible ? "flex" : "hidden lg:flex"
       }`}
     >
@@ -31,46 +41,40 @@ export default function CourtWorkspace({
         </div>
       </div>
 
-      {/* 3D Render Area */}
-      <div className="flex-1 w-full relative p-4">
+      {/* 3D Render Area with Floating Sidebar Toggle Buttons */}
+      <div className="flex-1 w-full relative p-4 min-h-0">
+        {/* Left Toggle (Roster Sidebar) */}
+        <button
+          onClick={onToggleRoster}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-lg bg-net-surface/80 border border-net-border/60 hover:bg-net-surface hover:border-net-green transition-all flex items-center justify-center cursor-pointer shadow-lg pointer-events-auto"
+          title={isRosterCollapsed ? "Expand Roster" : "Collapse Roster"}
+        >
+          {isRosterCollapsed ? (
+            <ChevronRight className="w-4 h-4 text-net-green" />
+          ) : (
+            <ChevronLeft className="w-4 h-4 text-net-cream" />
+          )}
+        </button>
+
+        {/* Right Toggle (AI Coach Sidebar) */}
+        <button
+          onClick={onToggleCoach}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-lg bg-net-surface/80 border border-net-border/60 hover:bg-net-surface hover:border-net-green transition-all flex items-center justify-center cursor-pointer shadow-lg pointer-events-auto"
+          title={isCoachCollapsed ? "Expand AI Coach" : "Collapse AI Coach"}
+        >
+          {isCoachCollapsed ? (
+            <ChevronLeft className="w-4 h-4 text-net-green" />
+          ) : (
+            <ChevronRight className="w-4 h-4 text-net-cream" />
+          )}
+        </button>
+
         <BasketballCourt3D activePlayer={activePlayer} selectedPlay={selectedPlay} />
       </div>
 
-      {/* Player Spacing Detail Drawer */}
-      <div className="border-t border-net-border bg-net-surface/60 backdrop-blur-md p-6 shrink-0 z-10">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="max-w-md">
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="text-xs font-mono text-net-green font-bold">
-                #{activePlayer.number}
-              </span>
-              <h3 className="text-base font-bold text-net-cream">
-                {activePlayer.name} Spacing Profile
-              </h3>
-            </div>
-            <p className="text-xs text-net-cream-dim/70 leading-relaxed">
-              {activePlayer.bio}
-            </p>
-          </div>
-
-          {/* Attributes Progress Bars */}
-          <div className="w-full md:w-64 space-y-2 shrink-0">
-            {Object.entries(activePlayer.attributes).map(([key, val]) => (
-              <div key={key}>
-                <div className="flex justify-between text-[10px] font-mono mb-1">
-                  <span className="text-net-cream-dim/50">{key}</span>
-                  <span className="text-net-green font-bold">{val}%</span>
-                </div>
-                <div className="h-1 bg-net-surface-light rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-net-green rounded-full transition-all duration-500"
-                    style={{ width: `${val}%` }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      {/* Player Spacing Detail Drawer (Collapsible/Scrollable to prevent mobile clipping) */}
+      <div className="border-t border-net-border bg-net-surface/60 backdrop-blur-md p-4 sm:p-6 shrink-0 z-10 max-h-[45vh] lg:max-h-[35vh] overflow-y-auto">
+        <PlayerCard player={activePlayer} />
       </div>
     </main>
   );

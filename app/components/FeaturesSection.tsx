@@ -4,10 +4,10 @@ import { Flame, Box, BarChart3, MessageCircle, Gamepad2, Share2 } from "lucide-r
 import type { LucideIcon } from "lucide-react";
 
 const features: { Icon: LucideIcon; title: string; desc: string; tag: string }[] = [
-  { Icon: Flame, title: "Bullshit Meter", desc: "Paste a bad take. Get a 0–100% Ball Knowledge Rating with receipts.", tag: "AI" },
+  { Icon: Flame, title: "Bullshit Meter", desc: "Paste any hoops claim. Get a 0–100% Ball Knowledge Rating with receipts.", tag: "AI" },
   { Icon: Box, title: "3D Court", desc: "See spacing, screening, and plays on an interactive Three.js court.", tag: "3D" },
   { Icon: BarChart3, title: "Player Eval", desc: "Advanced stats explained simply. Radar charts. AI scouting reports.", tag: "Data" },
-  { Icon: MessageCircle, title: "AI Mentor", desc: "Ask anything about basketball. Real answers, not Twitter opinions.", tag: "Chat" },
+  { Icon: MessageCircle, title: "AI Mentor", desc: "Ask anything about basketball. Instant, verified data-driven insights.", tag: "Chat" },
   { Icon: Gamepad2, title: "GM Mode", desc: "Cap space sim. Make roster moves. AI projects team performance.", tag: "Game" },
   { Icon: Share2, title: "Receipts", desc: "Shareable stat cards and scouting reports for your group chat.", tag: "Share" },
 ];

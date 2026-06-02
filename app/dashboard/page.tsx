@@ -1,10 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import RosterSidebar from "./components/RosterSidebar";
 import AICoachSidebar from "./components/AICoachSidebar";
 import CourtWorkspace from "./components/CourtWorkspace";
+import Header from "./components/Header";
 import { players } from "./data/players";
+import { playPositions } from "./data/plays";
 
 export default function DashboardPage() {
   const [selectedPlay, setSelectedPlay] = useState("Pick & Roll");
@@ -13,41 +16,92 @@ export default function DashboardPage() {
   const [claimText, setClaimText] = useState("");
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [evaluationResult, setEvaluationResult] = useState<null | { rating: number; text: string }>(null);
+  const [isRosterCollapsed, setIsRosterCollapsed] = useState(false);
+  const [isCoachCollapsed, setIsCoachCollapsed] = useState(false);
 
   const activePlayer = players.find((p) => p.id === selectedPlayerId) || players[0];
 
-  const handleEvaluateClaim = () => {
+  // Call the serverless AI Coach API using React Query for automated caching
+  const { data: aiFeedbackData, isLoading: isFeedbackLoading, error: feedbackError } = useQuery({
+    queryKey: ["coachFeedback", selectedPlay, selectedPlayerId],
+    queryFn: async () => {
+      const playData = playPositions[selectedPlay] || playPositions["Pick & Roll"];
+      const res = await fetch("/api/coach", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          playName: selectedPlay,
+          playerName: activePlayer.name,
+          offensePositions: playData.offense,
+          defensePositions: playData.defense,
+        }),
+      });
+      if (!res.ok) throw new Error("Error loading spacing feedback.");
+      const data = await res.json();
+      return data.text as string;
+    },
+  });
+
+  const aiFeedback = isFeedbackLoading
+    ? "Coach is analyzing spacing..."
+    : feedbackError
+    ? "AI Coach: Error connecting to tactical analysis feed."
+    : aiFeedbackData || "AI Coach: No spacing feedback available.";
+
+  const handleEvaluateClaim = async () => {
     if (!claimText.trim()) return;
     setIsEvaluating(true);
-    setTimeout(() => {
-      setIsEvaluating(false);
-      setEvaluationResult({
-        rating: 32,
-        text: `Claim evaluated: Spacing data shows Sabrina's off-ball positioning creates a 14% higher open-shot rate for trailing forwards than claimed. Rating: Airball.`,
+    setEvaluationResult(null);
+
+    const playData = playPositions[selectedPlay] || playPositions["Pick & Roll"];
+
+    try {
+      const res = await fetch("/api/bullshit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          claimText,
+          playerName: activePlayer.name,
+          playName: selectedPlay,
+          playerStats: activePlayer.stats,
+          playerAttributes: activePlayer.attributes,
+          offensePositions: playData.offense,
+          defensePositions: playData.defense,
+          allPlayers: players,
+        }),
       });
-    }, 1500);
+
+      if (!res.ok) throw new Error("Failed to evaluate claim.");
+      const data = await res.json();
+      setEvaluationResult({
+        rating: data.rating,
+        text: data.text,
+      });
+
+      // Confetti triggers on high score claims!
+      if (data.rating >= 60) {
+        const confetti = (await import("canvas-confetti")).default;
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ["#2d9e6a", "#f5f0e8", "#fdb315"],
+        });
+      }
+    } catch (err: any) {
+      console.error(err);
+      setEvaluationResult({
+        rating: 0,
+        text: `Error evaluating claim: ${err.message || "Please check connection."}`,
+      });
+    } finally {
+      setIsEvaluating(false);
+    }
   };
 
   return (
     <div className="w-screen h-screen bg-background text-foreground flex flex-col overflow-hidden font-sans">
-      {/* 1. Header Navigation */}
-      <header className="h-16 border-b border-net-border flex items-center justify-between px-4 sm:px-6 z-10 bg-net-surface/80 backdrop-blur-md shrink-0">
-        <div className="flex items-center gap-3">
-          <span className="text-sm font-bold tracking-tight text-net-cream whitespace-nowrap">
-            Net-Work<span className="hidden sm:inline"> Workspace</span>
-          </span>
-          <span className="text-[9px] font-mono text-net-green uppercase tracking-widest px-2.5 py-0.5 border border-net-green/30 rounded-full hidden md:inline-block">
-            Tactical Playbook
-          </span>
-        </div>
-        <a
-          href="/"
-          className="text-xs font-mono text-net-cream-dim/60 hover:text-net-green transition-colors whitespace-nowrap"
-        >
-          <span className="sm:hidden">← Exit</span>
-          <span className="hidden sm:inline">← Exit to Landing</span>
-        </a>
-      </header>
+      <Header />
 
       {/* 2. Mobile Tab Switcher */}
       <div className="lg:hidden flex border-b border-net-border bg-net-surface/50 shrink-0">
@@ -74,12 +128,17 @@ export default function DashboardPage() {
           selectedPlayerId={selectedPlayerId}
           onSelectPlayerId={setSelectedPlayerId}
           isVisible={mobileTab === "roster"}
+          isCollapsed={isRosterCollapsed}
         />
 
         <CourtWorkspace
           selectedPlay={selectedPlay}
           activePlayer={activePlayer}
           isVisible={mobileTab === "court"}
+          isRosterCollapsed={isRosterCollapsed}
+          isCoachCollapsed={isCoachCollapsed}
+          onToggleRoster={() => setIsRosterCollapsed(!isRosterCollapsed)}
+          onToggleCoach={() => setIsCoachCollapsed(!isCoachCollapsed)}
         />
 
         <AICoachSidebar
@@ -92,6 +151,9 @@ export default function DashboardPage() {
           evaluationResult={evaluationResult}
           onEvaluate={handleEvaluateClaim}
           isVisible={mobileTab === "ai"}
+          aiFeedback={aiFeedback}
+          isFeedbackLoading={isFeedbackLoading}
+          isCollapsed={isCoachCollapsed}
         />
       </div>
     </div>
